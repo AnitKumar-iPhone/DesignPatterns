@@ -36,3 +36,4 @@ if let productA: Product = factory.createProduct(type: "TypeA") {
 if let productB: Product = factory.createProduct(type: "TypeB") {
     print(productB)
 }
+
