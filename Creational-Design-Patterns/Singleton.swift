@@ -77,26 +77,6 @@ class MessageManager {
  */
 
 /*
- /// Mocking
- protocol MessageServices {
-     func getMessages() -> [String]
- }
-
- class MessageManager {
-     /// static constains - To access the singleton instance.
-     static let shared = MessageManager()
-     /// Private initializer - To create the object.
-     private init() { }
- }
-
- extension MessageManager: MessageServices {
-     func getMessages() -> [String] {
-         return ["Message1", "Message2", "Message3", "Message4"]
-     }
- }
- */
-
-/*
 class MessageManager {
     /// static constains - To access the singleton instance.
     static let shared = MessageManager()
@@ -135,7 +115,7 @@ extension MessageManager: MessageServices {
 
  Thread Safety - Managing concurrent access and ensuring thread safety with singletons can be complex. If multiple threads try to access or modify the singleton simultaneously, it may lead to race conditions or other synchronization issues.
 
- Difficulty in Extension - Singletons are often difficult to extend or modify because they rely on a single instance. If you need to introduce different behavior or multiple instances in the future, it can be challenging to adapt a singleton to these changes.
+ Difficulty in Extend - Singletons are often difficult to extend or modify because they rely on a single instance. If you need to introduce different behavior or multiple instances in the future, it can be challenging to adapt a singleton to these changes.
 
  Dependency Injection - Singletons make it harder to use dependency injection effectively. Since they are globally accessible, it's challenging to replace the singleton instance with a mock or substitute during testing or for alternate implementations.
 

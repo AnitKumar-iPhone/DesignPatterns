@@ -1,67 +1,89 @@
-protocol Product {
-    func getProduct()
+
+// Abstract Factory
+
+/*
+ Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+*/
+
+
+protocol ThemeFactory {
+    func createButton() -> Button
+    func createLabel() -> Label
 }
 
-class ConcreteProductA1: Product {
-    func getProduct() {
-        print("Using ConcreteProductA1")
+protocol Button {
+    func style()
+}
+
+protocol Label {
+    func style()
+}
+
+class LightThemeFactory: ThemeFactory {
+    func createButton() -> Button {
+        return LightButton()
+    }
+
+    func createLabel() -> Label {
+        return LightLabel()
     }
 }
 
-class ConcreteProductB1: Product {
-    func getProduct() {
-        print("Using ConcreteProductB1")
+class DarkThemeFactory: ThemeFactory {
+    func createButton() -> Button {
+        return DarkButton()
+    }
+
+    func createLabel() -> Label {
+        return DarkLabel()
     }
 }
 
-class ConcreteProductA2: Product {
-    func getProduct() {
-        print("Using ConcreteProductA2")
+class LightButton: Button {
+    func style() {
+        print("Applying light button style")
     }
 }
 
-class ConcreteProductB2: Product {
-    func getProduct() {
-        print("Using ConcreteProductB2")
+class LightLabel: Label {
+    func style() {
+        print("Applying light label style")
     }
 }
 
-protocol AbstractFactory {
-    static func createProduct(type: String) -> Product?
-}
-
-class ProductFactory1: AbstractFactory {
-    static func createProduct(type: String) -> Product? {
-        switch type {
-        case "TypeA":
-            return ConcreteProductA1()
-        case "TypeB":
-            return ConcreteProductB1()
-        default:
-            return nil
-        }
+class DarkButton: Button {
+    func style() {
+        print("Applying dark button style")
     }
 }
 
-class ProductFactory2: AbstractFactory {
-    static func createProduct(type: String) -> Product? {
-        switch type {
-        case "TypeA":
-            return ConcreteProductA2()
-        case "TypeB":
-            return ConcreteProductB2()
-        default:
-            return nil
-        }
+class DarkLabel: Label {
+    func style() {
+        print("Applying dark label style")
     }
 }
 
-var factory: AbstractFactory.Type = ProductFactory1.self
-if let productA: Product = factory.createProduct(type: "TypeA") {
-    print(productA)
+class App {
+    private var themeFactory: ThemeFactory
+
+    init(themeFactory: ThemeFactory) {
+        self.themeFactory = themeFactory
+    }
+
+    func applyTheme() {
+        let button = themeFactory.createButton()
+        let label = themeFactory.createLabel()
+
+        button.style()
+        label.style()
+    }
 }
 
-factory = ProductFactory2.self
-if let productB: Product = factory.createProduct(type: "TypeA") {
-    print(productB)
-}
+let lightThemeFactory = LightThemeFactory()
+let darkThemeFactory = DarkThemeFactory()
+
+let appWithLightTheme = App(themeFactory: lightThemeFactory)
+let appWithDarkTheme = App(themeFactory: darkThemeFactory)
+
+appWithLightTheme.applyTheme()
+appWithDarkTheme.applyTheme()
